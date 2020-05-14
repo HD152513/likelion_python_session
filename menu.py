@@ -13,13 +13,28 @@ class Menu:
 
     def new_account(self):
         print("\n======계좌개설======")
-        account_num = int(input("계좌번호: "))
+        account_num = input("계좌번호: ")
         name = input("이름: ")
-        save = int(input("예금: "))
+        save = input("예금: ")
+        flag = 1
+        if name == "":
+            print("이름은 공백일 수 없습니다.")
+            flag = 0
         if self.check(account_num):
             print("중복된 계좌입니다. ")
+            flag = 0
+        if account_num == "" or account_num.isalpha() or int(account_num) < 0:
+            print("올바르지 않은 계좌번호입니다. 공백, 문자, 마이너스 안됨")
+            flag = 0
+        if save == "" or save.isalpha():
+            print("예금을 잘못입력했습니다. 공백, 문자, 마이너스 안됨")
+            flag = 0
+        if flag == 0:
+            print("계좌 개설을 다시 합니다.")
             self.new_account()
         else:
+            account_num = int(account_num)
+            save = int(save)
             account = Info(account_num, name, save)
             self.account_list.append(account)
             print("##계좌개설을 완료하였습니다##")
@@ -75,7 +90,7 @@ class Menu:
                 print("##출금이 완료되었습니다##")
         if flag == 1:
             print("존재하지 않는 계좌입니다. ")
-            self.deposit()
+            self.withdraw()
         else:
             print("===================\n")
 
